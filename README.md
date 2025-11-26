@@ -115,22 +115,5 @@ curl "http://IP:8000/readings?sede=Sede%20Norte&sensor_type=temperature"
 
 ---
 
-## 📈 Trabajo Futuro
 
-- Integración con Kafka/MQTT  
-- Dashboard con Grafana  
-- Multi-datacenter  
-- Autenticación JWT  
 
----
-
-## 👨‍💻 Autor
-
-**Juan Manuel Morales Santacruz**  
-Proyecto final — Sistemas Distribuidos
-
----
-
-## 📜 Licencia
-
-MIT License
