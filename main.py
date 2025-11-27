@@ -7,6 +7,10 @@ from pydantic import BaseModel
 from cassandra.cluster import Cluster
 from cassandra.policies import DCAwareRoundRobinPolicy
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Leer variables de entorno
 CONTACT_POINTS = os.getenv("CASSANDRA_CONTACT_POINTS", "").split(",")
 DATACENTER = os.getenv("CASSANDRA_DATACENTER", "datacenter1")
@@ -85,3 +89,18 @@ def list_readings(sede: str, sensor_type: str, limit: int = 20):
         }
         for r in rows
     ]
+
+
+@app.get("/sedes")
+def list_sedes():
+    query = "SELECT DISTINCT sede, sensor_type FROM readings"
+    rows = session.execute(query)
+    return list(set(r.sede for r in rows))
+
+
+@app.get("/sensor_types")
+def list_sensor_types(sede: str):
+    query = "SELECT DISTINCT sede, sensor_type FROM readings"
+    rows = session.execute(query)
+    data = filter(lambda r: r.sede == sede, rows)
+    return [data.sensor_type for data in data]
